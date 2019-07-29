@@ -1,10 +1,11 @@
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
 # from datetime import datetime
 # Create your models here.
 
 
-class MyUserManager(BaseUserManager):
+class UserManager(BaseUserManager):
     def create_user(self, username,  password=None):
         # 验证是否有用户名
         if not username:
@@ -23,9 +24,11 @@ class MyUserManager(BaseUserManager):
             username,
             password=password
         )
+        user.is_superuser=True
         user.is_admin = True
         user.save(using=self._db)
         return user
+
 class UserProfile(AbstractBaseUser):
     username=models.CharField(verbose_name="用户名",unique=True,max_length=30)
     nick_name=models.CharField(verbose_name="昵称",max_length=50,default="")
@@ -39,9 +42,11 @@ class UserProfile(AbstractBaseUser):
     update_time=models.DateTimeField(verbose_name="更新时间",auto_now=True)
     is_active = models.BooleanField(default=True)
     is_admin=models.BooleanField(default=True)
+    is_staff=models.BooleanField(default=True)
+    is_superuser=models.BooleanField(default=False)
     is_delete=models.BooleanField(default=False,verbose_name='逻辑删除', help_text='逻辑删除')
 
-    objects = MyUserManager()
+    objects = UserManager()
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []  # 创建超级用户时使用
@@ -63,12 +68,6 @@ class UserProfile(AbstractBaseUser):
         # Simplest possible answer: Yes, always
         return True
 
-    @property
-    def is_staff(self):
-        "Is the user a member of staff?"
-        # Simplest possible answer: All admins are staff
-        return self.is_admin
-
     class Meta:
         verbose_name="用户信息"
         verbose_name_plural=verbose_name
@@ -77,12 +76,15 @@ class UserProfile(AbstractBaseUser):
 class EmailVerifyRecord(models.Model):
     code=models.CharField(verbose_name="验证码",max_length=20)
     email=models.EmailField(verbose_name="邮箱",max_length=50)
-    send_type=models.CharField(choices=(("register","注册"),("forget","找回密码")),max_length=10)
-    send_time=models.DateTimeField(auto_now=True)
+    send_type=models.CharField(choices=(("register","注册"),("forget","找回密码")),max_length=10,verbose_name='发送类型')
+    send_time=models.DateTimeField(auto_now=True,verbose_name='发送时间')
 
     class Meta:
         verbose_name="邮箱验证码"
         verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.code
 
 
 class Banner(models.Model):
@@ -95,3 +97,6 @@ class Banner(models.Model):
     class Meta:
         verbose_name="轮播图"
         verbose_name_plural=verbose_name
+
+    def __str__(self):
+        return self.title
