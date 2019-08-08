@@ -17,7 +17,7 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
-# sys.path.insert(0,os.path.join(BASE_DIR,'extra_apps'))
+sys.path.insert(0,os.path.join(BASE_DIR,'media'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'operation',
     'xadmin',
     'crispy_forms',
+    'captcha',
     # 'django.conf'
 ]
 
@@ -130,5 +131,21 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = "users.UserProfile"
 
 STATICFILES_DIRS = [
-    # os.path.join(BASE_DIR,'extra_apps')
+    os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR,'media'),
 ]
+
+AUTHENTICATION_BACKENDS=(
+    'users.views.CustomBackend',
+)
+
+EMAIL_HOST="smtp.qq.com"
+EMAIL_PORT=25
+EMAIL_HOST_USER="2936002983@qq.com"
+EMAIL_HOST_PASSWORD="hoyidyarizpedejj"
+EMAIL_USER_TLS=False
+EMAIL_FROM="2936002983@qq.com"
+
+
+MEDIA_URL='/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'media')

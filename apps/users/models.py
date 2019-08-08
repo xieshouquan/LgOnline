@@ -31,6 +31,7 @@ class UserManager(BaseUserManager):
 
 class UserProfile(AbstractBaseUser):
     username=models.CharField(verbose_name="用户名",unique=True,max_length=30)
+    email=models.EmailField(verbose_name="邮箱",null=True)
     nick_name=models.CharField(verbose_name="昵称",max_length=50,default="")
     birday=models.DateField(verbose_name="生日",null=True,blank=True)
     gender=models.CharField(verbose_name="性别",max_length=10,choices=(("male","男"),("female","女")),default="female")
