@@ -24,13 +24,15 @@ from django.views.generic import TemplateView
 from django.views.static import serve
 
 from LgOnline.settings import BASE_DIR
-from organization.views import OrgView
 from users.views import LoginView, RegisterView, ActiveUserView, ForgetPwdView, ResetView, ModifyView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('xadmin/', xadmin.site.urls),
     path('captcha', include('captcha.urls')),
+
+    # 课程机构url配置
+    re_path(r'^org/', include(('organization.urls', 'organization'), namespace="org")),
     url('^$', TemplateView.as_view(template_name="index.html"), name='index'),
     re_path(r'^login/', LoginView.as_view(), name='login'),
     re_path(r'^register/', RegisterView.as_view(), name='register'),
@@ -40,6 +42,4 @@ urlpatterns = [
     re_path(r'^reset/(?P<active_code>.*)/$', ResetView.as_view(), name='resetpwd'),
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': os.path.join(BASE_DIR, 'media')}),
 
-    # 课程机构首页
-    re_path(r'^org_list/$',OrgView.as_view(),name='org_list'),
 ]

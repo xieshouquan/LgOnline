@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'xadmin',
     'crispy_forms',
     'captcha',
-    # 'django.conf'
+    'pure_pagination',
 ]
 
 MIDDLEWARE = [

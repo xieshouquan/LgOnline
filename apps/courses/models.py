@@ -1,10 +1,11 @@
 from django.db import models
-
+from organization.models import CourseOrg
 
 # Create your models here.
 
 
 class Course(models.Model):
+    course_org = models.ForeignKey(CourseOrg,verbose_name="课程机构",null=True,blank=True,on_delete=models.CASCADE)
     name = models.CharField(verbose_name="课程名", max_length=50)
     desc = models.CharField(verbose_name="课程描述", max_length=300)
     detail = models.TextField(verbose_name="课程详情")
