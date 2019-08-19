@@ -7,7 +7,7 @@ from django.views.generic import View
 from operation.models import UserFavorite
 from organization.forms import UserAskForm
 from organization.models import CourseOrg, CityDict
-from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
+from pure_pagination import Paginator, PageNotAnInteger
 
 
 class OrgView(View):

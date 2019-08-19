@@ -1,4 +1,4 @@
-from django.urls import path, re_path, include
+from django.urls import re_path
 
 from organization.views import OrgView, AddUserAskView, OrgHomeView, OrgCourseView, OrgDescView, OrgTeacherView, \
     AddFavView

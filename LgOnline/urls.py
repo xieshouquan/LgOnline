@@ -31,8 +31,7 @@ urlpatterns = [
     path('xadmin/', xadmin.site.urls),
     path('captcha', include('captcha.urls')),
 
-    # 课程机构url配置
-    re_path(r'^org/', include(('organization.urls', 'organization'), namespace="org")),
+
     url('^$', TemplateView.as_view(template_name="index.html"), name='index'),
     re_path(r'^login/', LoginView.as_view(), name='login'),
     re_path(r'^register/', RegisterView.as_view(), name='register'),
@@ -40,6 +39,14 @@ urlpatterns = [
     re_path(r'^forget/$', ForgetPwdView.as_view(), name='forget_pwd'),
     re_path(r'^modifypwd/$', ModifyView.as_view(), name='modify_pwd'),
     re_path(r'^reset/(?P<active_code>.*)/$', ResetView.as_view(), name='resetpwd'),
+
+    #上传文件访问处理
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root': os.path.join(BASE_DIR, 'media')}),
+
+    # 课程机构url配置
+    re_path(r'^org/', include(('organization.urls', 'organization'), namespace="org")),
+
+    # 课程相关url配置
+    re_path(r'^course/', include(('courses.urls', 'organization'), namespace="course")),
 
 ]

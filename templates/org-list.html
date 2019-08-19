@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}课程机构列表 - 凉糕在线网{% endblock %}
 {% load staticfiles %}
+{% block custom_bread %}
+    <section>
+        <div class="wp">
+            <ul class="crumbs">
+                <li><a href="index.html">首页</a>></li>
+                <li>课程机构</li>
+            </ul>
+        </div>
+    </section>
+{% endblock %}
 {% block content %}
     <section>
         <div class="wp butler_list_box list">
@@ -54,7 +64,7 @@
                         {% for course_org in all_orgs.object_list %}
                             <dl class="des difdes">
                                 <dt>
-                                    <a href="{% url 'org:home' course_org.id%}">
+                                    <a href="{% url 'org:home' course_org.id %}">
                                         <img width="200" height="120" class="scrollLoading"
                                              data-url="/media/{{ course_org.image }}"/>
                                     </a>
