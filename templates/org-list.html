@@ -54,7 +54,7 @@
                         {% for course_org in all_orgs.object_list %}
                             <dl class="des difdes">
                                 <dt>
-                                    <a href="org-detail-homepage.html">
+                                    <a href="{% url 'org:home' course_org.id%}">
                                         <img width="200" height="120" class="scrollLoading"
                                              data-url="/media/{{ course_org.image }}"/>
                                     </a>
@@ -150,7 +150,6 @@
             </div>
         </div>
     </section>
-
 {% endblock %}
 {% block custom_js %}
     <script>
